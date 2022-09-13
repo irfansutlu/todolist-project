@@ -2,6 +2,10 @@ const content = document.querySelector("#content");
 const addBtn = document.querySelector("#add-btn");
 const list = document.querySelector("#myUl");
 
+window.addEventListener("load", () => {
+  content.focus();
+});
+
 //add event
 addBtn.addEventListener("click", () => {
   if (!content.value) {
@@ -17,7 +21,13 @@ addBtn.addEventListener("click", () => {
     li.appendChild(span);
     span.className = "close";
     span.innerText = "\u00D7";
+
+    deleteBtn = document.querySelectorAll(".close");
+    for (let i = 0; i < deleteBtn.length; i++) {
+      deleteBtn[i].addEventListener("click", deleteEvent);
+    }
   }
+  content.focus();
 });
 
 content.addEventListener("keydown", (event) => {
@@ -37,9 +47,12 @@ list.addEventListener(
   false
 );
 
-let close = document.getElementsByClassName("close");
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function () {
-    list.remove(li);
-  };
+//delete event
+function deleteEvent() {
+  let selected = confirm("Are you sure?");
+  if (selected == true) {
+    // eğer onaylanırsa tıklanan i değişkeninin üst etiketi silinsin
+    let removeElement = this.parentElement;
+    removeElement.remove();
+  }
 }
